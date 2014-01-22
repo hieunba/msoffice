@@ -1,0 +1,85 @@
+#
+# Author:: Mikhail Zholobov
+# Cookbook Name:: msoffice
+# Recipe:: install
+#
+# Copyright 2014, Mikhail Zholobov.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Ensure 7-zip is installed
+include_recipe '7-zip::default'
+
+# Ensure the installation ISO url has been set by the user
+if node['msoffice']['source'].nil?
+  raise "'msoffice source' attribute must be set before running this cookbook"
+end
+
+edition = node['msoffice']['edition']
+version = node['msoffice']['version']
+install_url = File.join(node['msoffice']['source'], node['msoffice'][edition]['filename'])
+checksum = node['msoffice'][edition]['checksum']
+msoffice_package_name = node['msoffice'][edition]['package_name']
+
+install_log_file = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'msoffice2013_install.log'))
+
+seven_zip_exe = File.join(node['7-zip']['home'], '7z.exe')
+iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'msoffice2013'))
+setup_exe_path = File.join(iso_extraction_dir, 'setup.exe')
+config_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Config.xml'))
+
+msoffice_is_installed = registry_key_exists?(node['msoffice']['registrykey'][version], :x86_64)
+
+# Download ISO to local file cache, or just use if local path
+local_iso_path = cached_file(install_url, checksum) unless msoffice_is_installed
+
+# Create the extraction tmp dir
+directory iso_extraction_dir do
+  action :create
+  notifies :run, 'execute[extract_msoffice_iso]', :immediately
+  not_if { msoffice_is_installed }
+end
+
+# Extract the ISO image to the tmp dir
+execute 'extract_msoffice_iso' do
+  command "#{seven_zip_exe} x -y -o#{iso_extraction_dir} #{local_iso_path}"
+  not_if { msoffice_is_installed }
+  notifies :create, "template[#{config_xml_file}]", :immediately
+end
+
+# Create installation config file
+template config_xml_file do
+  source 'Config-' + edition + '.erb'
+  variables(
+    :pid_key => node["msoffice"]["pid_key"],
+    :auto_activate => node["msoffice"]["auto_activate"]
+  )
+  action :nothing
+end
+
+# Install Microsoft Office
+windows_package msoffice_package_name do
+  source setup_exe_path
+  installer_type :custom
+  options "/config \"#{config_xml_file}\""
+  notifies :delete, "directory[#{iso_extraction_dir}]", :immediately
+  timeout 1200 # 20minutes
+  not_if { msoffice_is_installed }
+end
+
+# Cleanup extracted ISO files from tmp dir
+directory iso_extraction_dir do
+  action :nothing
+  recursive true
+end
