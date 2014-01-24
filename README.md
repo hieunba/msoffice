@@ -6,10 +6,14 @@ It is working fine, but is not fully completed. You're welcome to contribute!
 
 This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the 7-zip default recipe.
 
-Windows 7
-Windows 2008 Server (R2)
-Windows 8 (8.1)
-Windows 2012 Server (R2)
+It was successfully tested on:
+- Windows 2012 Server (R2)
+
+Also it should work on:
+- Windows 7
+- Windows 2008 Server (R2)
+- Windows 8 (8.1)
+
 
 # Usage
 
