@@ -41,45 +41,38 @@ config_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Config.xml'))
 
 msoffice_is_installed = registry_key_exists?(node['msoffice']['registrykey'][version], :x86_64)
 
-# Download ISO to local file cache, or just use if local path
-local_iso_path = cached_file(install_url, checksum) unless msoffice_is_installed
+if msoffice_is_installed
+  log "#{msoffice_package_name} is already installed. Skipping..."
+else
+  # Download ISO to local file cache, or just use if local path
+  local_iso_path = cached_file(install_url, checksum)
 
-# Create the extraction tmp dir
-directory iso_extraction_dir do
-  action :create
-  notifies :run, 'execute[extract_msoffice_iso]', :immediately
-  not_if { msoffice_is_installed }
-end
+  # Create the extraction tmp dir
+  directory iso_extraction_dir do
+    recursive true
+    action :create
+  end
 
-# Extract the ISO image to the tmp dir
-execute 'extract_msoffice_iso' do
-  command "#{seven_zip_exe} x -y -o#{iso_extraction_dir} #{local_iso_path}"
-  not_if { msoffice_is_installed }
-  notifies :create, "template[#{config_xml_file}]", :immediately
-end
+  # Extract the ISO image to the tmp dir
+  execute 'extract_msoffice_iso' do
+    command "#{seven_zip_exe} x -y -o#{iso_extraction_dir} #{local_iso_path}"
+  end
 
-# Create installation config file
-template config_xml_file do
-  source 'Config-' + edition + '.erb'
-  variables(
-    :pid_key => node["msoffice"]["pid_key"],
-    :auto_activate => node["msoffice"]["auto_activate"]
-  )
-  action :nothing
-end
+  # Create installation config file
+  template config_xml_file do
+    source 'Config-' + edition + '.erb'
+    variables(
+      :pid_key => node["msoffice"]["pid_key"],
+      :auto_activate => node["msoffice"]["auto_activate"]
+    )
+  end
 
-# Install Microsoft Office
-windows_package msoffice_package_name do
-  source setup_exe_path
-  installer_type :custom
-  options "/config \"#{config_xml_file}\""
-  notifies :delete, "directory[#{iso_extraction_dir}]", :immediately
-  timeout 1200 # 20minutes
-  not_if { msoffice_is_installed }
-end
-
-# Cleanup extracted ISO files from tmp dir
-directory iso_extraction_dir do
-  action :nothing
-  recursive true
+  # Install Microsoft Office
+  windows_package msoffice_package_name do
+    source setup_exe_path
+    installer_type :custom
+    options "/config \"#{config_xml_file}\""
+    notifies :delete, "directory[#{iso_extraction_dir}]"
+    timeout 1200 # 20minutes
+  end
 end
