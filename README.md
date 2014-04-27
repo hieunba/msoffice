@@ -1,4 +1,6 @@
 # Microsoft Office Cookbook
+[![Cookbook Version](https://img.shields.io/cookbook/v/msoffice.svg)](https://community.opscode.com/cookbooks/msoffice)
+
 This Chef cookbook installs Microsoft Office 2013 from an ISO.
 It is working fine, but is not fully completed. You're welcome to contribute!
 
