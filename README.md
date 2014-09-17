@@ -32,6 +32,8 @@ By default this cookbook assumes you're installing Microsoft Office 2013 Profess
 * `node['msoffice']['edition']` - MS Office edition to install. Default: `professional`
 * `node['msoffice']['version']` - Choose between '32bit' and '64bit'  MS Office edition to install. Default: `professional`
 * `node['msoffice']['pid_key']` - Your MS Office product key. You can leave it undefined or empty to enter key manually later.
+* `node['msoffice']['companyname']` - If you want a Company Name registered to the MS Office software.
+* `node['msoffice']['username']` - If you want a users name registered to the MS Office software.
 * `node['msoffice']['auto_activate']` - Activate MS Office product after installation. Default: `false`
 
 Attributes per each edition:

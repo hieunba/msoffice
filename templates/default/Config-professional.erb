@@ -11,11 +11,13 @@
 <Setting Id="AUTO_ACTIVATE" Value="1" />
 <% end -%>
 
-<!-- <USERNAME Value="Customer" /> -->
+<% unless @username.to_s.empty? %>
+<COMPANYNAME Value="<%= @username %>" />
+<% end -%>
 
-<!-- <COMPANYNAME Value="MyCompany" /> -->
-
-<!-- <INSTALLLOCATION Value="%programfiles%\Microsoft Office" /> -->
+<% unless @companyname.to_s.empty? %>
+<COMPANYNAME Value="<%= @companyname %>" />
+<% end -%>
 
 <!-- <LIS CACHEACTION="CacheOnly" /> -->
 

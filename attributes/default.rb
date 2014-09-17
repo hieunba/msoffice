@@ -24,8 +24,14 @@ default['msoffice']['version'] = '64bit' # or '32bit'
 # Set this attribute to the your Product Key, or just leave it empty to enter it manually later
 # default['msoffice']['pid_key'] = ''
 
+# Setting up Company and User ID in the Config.xml file
+# default['msoffice']['companyname'] = ''
+# default['msoffice']['username'] = ''
+
+
 # Set this attribute to the true if you want to activate MS Office automatically
 default['msoffice']['auto_activate'] = false
+
 
 # Set this attribute yourself to the FQDN of the folder which contains the ISO
 # default['msoffice']['source'] = 'http://example.com:8080/msoffice'
