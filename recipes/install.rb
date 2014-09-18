@@ -63,7 +63,9 @@ else
     source 'Config-' + edition + '.erb'
     variables(
       :pid_key => node["msoffice"]["pid_key"],
-      :auto_activate => node["msoffice"]["auto_activate"]
+      :auto_activate => node["msoffice"]["auto_activate"],
+      :companyname => node['msoffice']['companyname'],
+    :username => node['msoffice']['username']
     )
   end
 
