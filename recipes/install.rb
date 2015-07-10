@@ -32,10 +32,10 @@ install_url = File.join(node['msoffice']['source'], node['msoffice'][edition]['f
 checksum = node['msoffice'][edition]['checksum']
 msoffice_package_name = node['msoffice'][edition]['package_name']
 
-install_log_file = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'msoffice2013_install.log'))
+install_log_file = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'msoffice_install.log'))
 
 seven_zip_exe = File.join(node['7-zip']['home'], '7z.exe')
-iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'msoffice2013'))
+iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'msoffice'))
 setup_exe_path = File.join(iso_extraction_dir, 'setup.exe')
 config_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Config.xml'))
 

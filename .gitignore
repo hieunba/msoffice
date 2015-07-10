@@ -1,16 +1,23 @@
-.vagrant
-Berksfile.lock
 *~
 *#
 .#*
 \#*#
 .*.sw[a-z]
 *.un~
+pkg/
+
+# Berkshelf
+.vagrant
+Berksfile.lock
 /cookbooks
 
 # Bundler
+Gemfile.lock
 bin/*
 .bundle/*
 
 .kitchen/
 .kitchen.local.yml
+
+*.sublime-project
+*.sublime-workspace

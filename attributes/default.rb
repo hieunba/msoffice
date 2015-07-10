@@ -41,6 +41,7 @@ default['msoffice']['professional']['package_name'] = 'Microsoft Office Professi
 default['msoffice']['professional']['filename'] = 'en_office_professional_plus_2013_x64_dvd_1123674.iso'
 default['msoffice']['professional']['checksum'] = '2a31129a9d85896baf3eaf0a9380232cb16de0fb339675fe2405be22852612b0'
 
-# Currently you cannot change this, doing so will break the cookbook
+# Used to determine if office is installed
+# Change to 14.0 for Office 2010
 default['msoffice']['registrykey']['64bit'] = 'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Office\15.0\Common'
 default['msoffice']['registrykey']['32bit'] = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\15.0\Common'
