@@ -18,12 +18,12 @@
 # limitations under the License.
 #
 
-# Ensure 7-zip is installed
-include_recipe '7-zip::default'
+# Ensure seven_zip is installed
+include_recipe 'seven_zip::default'
 
 # Ensure the installation ISO url has been set by the user
 if node['msoffice']['source'].nil?
-  raise "'msoffice source' attribute must be set before running this cookbook"
+  fail "'msoffice source' attribute must be set before running this cookbook"
 end
 
 edition = node['msoffice']['edition']
@@ -32,10 +32,8 @@ install_url = File.join(node['msoffice']['source'], node['msoffice'][edition]['f
 checksum = node['msoffice'][edition]['checksum']
 msoffice_package_name = node['msoffice'][edition]['package_name']
 
-install_log_file = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'msoffice2013_install.log'))
-
-seven_zip_exe = File.join(node['7-zip']['home'], '7z.exe')
-iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'msoffice2013'))
+seven_zip_exe = File.join(node['seven_zip']['home'], '7z.exe')
+iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir, 'msoffice2013'))
 setup_exe_path = File.join(iso_extraction_dir, 'setup.exe')
 config_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Config.xml'))
 
@@ -62,8 +60,8 @@ else
   template config_xml_file do
     source 'Config-' + edition + '.erb'
     variables(
-      :pid_key => node["msoffice"]["pid_key"],
-      :auto_activate => node["msoffice"]["auto_activate"]
+      pid_key: node['msoffice']['pid_key'],
+      auto_activate: node['msoffice']['auto_activate']
     )
   end
 
