@@ -21,8 +21,8 @@
 default['msoffice']['edition'] = 'professional' # other editions are not supported yet
 default['msoffice']['version'] = '64bit' # or '32bit'
 
-# Set this attribute to the your Product Key, or just leave it empty to enter it manually later
-# default['msoffice']['pid_key'] = ''
+# Set this attribute to the your Product Key, or keep it nil to activate manually
+default['msoffice']['pid_key'] = nil
 
 # Set this attribute to the true if you want to activate MS Office automatically
 default['msoffice']['auto_activate'] = false
@@ -30,7 +30,7 @@ default['msoffice']['auto_activate'] = false
 # Set this attribute yourself to the FQDN of the folder which contains the ISO
 # default['msoffice']['source'] = 'http://example.com:8080/msoffice'
 
-# VS 2012 Professional
+# MS Office 2013
 default['msoffice']['professional']['package_name'] = 'Microsoft Office Professional Plus 2013'
 default['msoffice']['professional']['filename'] = 'en_office_professional_plus_2013_x64_dvd_1123674.iso'
 default['msoffice']['professional']['checksum'] = '2a31129a9d85896baf3eaf0a9380232cb16de0fb339675fe2405be22852612b0'

@@ -3,7 +3,7 @@
 
 <Logging Type="standard" Path="%temp%" Template="Microsoft Office Professional Plus Setup(*).txt" />
 
-<% unless @pid_key.to_s.empty? %>
+<% unless @pid_key.nil? %>
 <PIDKEY Value="<%= @pid_key %>" />
 <% end -%>
 
