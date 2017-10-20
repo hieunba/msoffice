@@ -18,8 +18,7 @@
 # limitations under the License.
 #
 
-# Ensure 7-zip is installed
-include_recipe '7-zip::default'
+include_recipe 'seven_zip::default'
 
 # Ensure the installation ISO url has been set by the user
 if node['msoffice']['source'].nil?
@@ -34,7 +33,6 @@ msoffice_package_name = node['msoffice'][edition]['package_name']
 
 install_log_file = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'msoffice_install.log'))
 
-seven_zip_exe = File.join(node['7-zip']['home'], '7z.exe')
 iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'msoffice'))
 setup_exe_path = File.join(iso_extraction_dir, 'setup.exe')
 config_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Config.xml'))
@@ -54,8 +52,11 @@ else
   end
 
   # Extract the ISO image to the tmp dir
-  execute 'extract_msoffice_iso' do
-    command "#{seven_zip_exe} x -y -o#{iso_extraction_dir} #{local_iso_path}"
+  seven_zip_archive 'extract_msoffice_iso' do
+    path iso_extraction_dir
+    source local_iso_path
+    overwrite true
+    timeout 30
   end
 
   # Create installation config file
