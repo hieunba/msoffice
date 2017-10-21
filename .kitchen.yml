@@ -7,9 +7,6 @@ provisioner:
 
 platforms:
   - name: windows-2012R2
-    driver:
-      network:
-        - ["forwarded_port", {guest: 3389, host: 3389}]
     driver_config:
       box: mwrock/Windows2012R2
       communicator: winrm
