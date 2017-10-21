@@ -13,7 +13,7 @@ platforms:
       customize:
         cpus: 2
         memory: 2048
-      require_chef_omnibus: 12.5.1
+      require_chef_omnibus: 12.6.0
       vm_hostname: false
     transport:
       name: winrm
