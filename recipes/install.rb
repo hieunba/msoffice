@@ -56,7 +56,7 @@ else
     path iso_extraction_dir
     source local_iso_path
     overwrite true
-    timeout 30
+    timeout 300
   end
 
   # Create installation config file
