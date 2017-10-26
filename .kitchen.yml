@@ -7,16 +7,13 @@ provisioner:
 
 platforms:
   - name: windows-2012R2
-    driver:
-      network:
-        - ["forwarded_port", {guest: 3389, host: 3389}]
     driver_config:
       box: mwrock/Windows2012R2
       communicator: winrm
       customize:
         cpus: 2
         memory: 2048
-      require_chef_omnibus: 12.3.0
+      require_chef_omnibus: 12.6.0
       vm_hostname: false
     transport:
       name: winrm
