@@ -10,6 +10,7 @@ This cookbook requires 7-zip to be installed so it can extract the ISO. To ensur
 
 It was successfully tested on:
 - Windows 2012 Server (R2)
+- Windows 10 Pro
 
 Also it should work on:
 - Windows 7
