@@ -61,8 +61,9 @@ else
 
   # Create installation config file
   template config_xml_file do
-    source 'Config-' + edition + '.erb'
+    source 'config.xml.erb'
     variables(
+      :edition => node['msoffice']['edition'].capitalize,
       :pid_key => node["msoffice"]["pid_key"],
       :auto_activate => node["msoffice"]["auto_activate"],
       :companyname => node['msoffice']['companyname'],
