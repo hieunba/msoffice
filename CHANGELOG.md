@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of msoffice cookbook.
 
+## 0.3.0
+
+- Install source should now defined with node['msoffice']['source'] only
+
 ## 0.2.1
 
 - Fix timeout for iso extraction
