@@ -27,7 +27,7 @@ end
 
 edition = node['msoffice']['edition']
 version = node['msoffice']['version']
-install_url = File.join(node['msoffice']['source'], node['msoffice'][edition]['filename'])
+install_url = node['msoffice']['source']
 checksum = node['msoffice'][edition]['checksum']
 msoffice_package_name = node['msoffice'][edition]['package_name']
 
