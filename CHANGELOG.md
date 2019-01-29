@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of msoffice cookbook.
 
+## 0.3.1
+
+- Unify config.xml templates for all editions (ProPlus and Standard)
+
 ## 0.3.0
 
 - Install source should now defined with node['msoffice']['source'] only
