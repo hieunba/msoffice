@@ -1,0 +1,34 @@
+<Configuration Product="ProPlus">
+<Display Level="none" CompletionNotice="no" SuppressModal="no" AcceptEula="Yes" />
+
+<Logging Type="standard" Path="%temp%" Template="Microsoft Office Professional Plus Setup(*).txt" />
+
+<% unless @pid_key.to_s.empty? %>
+<PIDKEY Value="<%= @pid_key %>" />
+<% end -%>
+
+<% if @auto_activate %>
+<Setting Id="AUTO_ACTIVATE" Value="1" />
+<% end -%>
+
+<% unless @username.to_s.empty? %>
+<USERNAME Value="<%= @username %>" />
+<% end -%>
+
+<% unless @companyname.to_s.empty? %>
+<COMPANYNAME Value="<%= @companyname %>" />
+<% end -%>
+
+<!-- <LIS CACHEACTION="CacheOnly" /> -->
+
+<!-- <LIS SOURCELIST="\\server1\share\Office;\\server2\share\Office" /> -->
+
+<!-- <DistributionPoint Location="\\server\share\Office" /> -->
+
+<!-- <OptionState Id="OptionID" State="absent" Children="force" /> -->
+
+<!-- <Setting Id="SETUP_REBOOT" Value="IfNeeded" /> -->
+
+<!-- <Command Path="%windir%\system32\msiexec.exe" Args="/i \\server\share\my.msi" QuietArg="/q" ChainPosition="after" Execute="install" /> -->
+
+</Configuration>

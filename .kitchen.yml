@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: windows-2012R2
+    driver_config:
+      box: mwrock/Windows2012R2
+      communicator: winrm
+      customize:
+        cpus: 2
+        memory: 2048
+      require_chef_omnibus: 12.6.0
+      vm_hostname: false
+    transport:
+      name: winrm
+
+suites:
+  - name: 2010x64
+    run_list:
+      - recipe[msoffice::default]
+    attributes:
+      dev_mode: true
+      msoffice:
+        professional:
+          package_name: Microsoft Office Professional Plus 2010
+          filename: SW_DVD5_Office_Professional_Plus_2010_64Bit_English_MLF_X16-52545.ISO
+          checksum: ca82ecb430cc4eefde43c5fabd2ca2ce4eb5bbb086d9cf860c54e09c7d91ea6f
+        registrykey:
+          64bit: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Office\14.0\Common
+          32bit: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Office\14.0\Common
